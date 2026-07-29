@@ -120,3 +120,19 @@ Como funciona (para dummies):
 
 Nota: lo aprendido se guarda en tu propio dispositivo. Si borras
 los datos del navegador, la app simplemente vuelve a aprender.
+
+NOVEDAD: MAPA, MODELOS Y TENDENCIA
+-----------------------------------
+Usando esos mismos datos de adsb.lol y airplanes.live, la app ahora
+tambien te muestra:
+
+  1. Un mapa en tiempo real con la posicion de esos jets ahora mismo
+     (toca un punto para ver el vuelo, la matricula y la altitud).
+  2. Una lista de que modelos de avion son los mas comunes en el aire.
+  3. Una mini-grafica de como ha ido cambiando esa cantidad en las
+     ultimas horas (se necesitan un par de comprobaciones para que
+     empiece a dibujarse).
+
+Todo esto vive dentro del panel "Fuentes de datos" y el nuevo panel
+del mapa, justo debajo. No hace falta activar nada, se actualiza solo
+cada vez que la app comprueba el cielo.
