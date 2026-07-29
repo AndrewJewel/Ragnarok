@@ -114,11 +114,12 @@ body.alarma .b3{background:radial-gradient(circle,rgba(242,92,84,.4),transparent
 .parpadeo-suave{animation:latido 1.1s ease-in-out infinite}
 
 .cabecera{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.marca{display:flex;align-items:center;gap:14px;min-width:0}
-.logo{width:clamp(48px,9vw,64px);height:auto;border-radius:16px;flex-shrink:0;
-  box-shadow:0 6px 18px rgba(0,0,0,.45);
-  transition:box-shadow 400ms ease,transform 400ms var(--ease-out)}
-body.alarma .logo{box-shadow:0 0 22px rgba(242,92,84,.75);transform:scale(1.04)}
+.marca{display:flex;align-items:center;gap:12px;margin-top:6px;min-width:0}
+.marca h1{margin:0}
+.logo{height:clamp(28px,5vw,42px);width:auto;flex-shrink:0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));
+  transition:filter 400ms ease,transform 400ms var(--ease-out)}
+body.alarma .logo{filter:drop-shadow(0 0 10px rgba(242,92,84,.85));transform:scale(1.05)}
 .eyebrow{font-size:12px;letter-spacing:.28em;color:var(--ambar);text-transform:uppercase;
   display:flex;align-items:center;gap:8px}
 h1{margin:4px 0 0;font-size:clamp(26px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
@@ -223,14 +224,14 @@ dialog li{margin-bottom:6px}
 <div class="contenedor">
 
   <header class="cabecera entrada">
-    <div class="marca">
-      <img class="logo" src="iconos/icono-192.png" alt="Logo de Ragnarok: un dragón enroscado alrededor de un signo de exclamación" width="64" height="64">
-      <div>
+    <div>
       <div class="eyebrow">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
         Sistema de alerta temprana · Jets privados
       </div>
-      <h1>Ragnarok</h1>
+      <div class="marca">
+        <img class="logo" src="iconos/logo-transparente.png" alt="Logo de Ragnarok: un dragón enroscado alrededor de un signo de exclamación">
+        <h1>Ragnarok</h1>
       </div>
     </div>
     <div class="chip-estado mono">
