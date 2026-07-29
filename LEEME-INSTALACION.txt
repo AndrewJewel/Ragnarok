@@ -1,0 +1,104 @@
+====================================================
+  RAGNAROK - INSTRUCCIONES DE INSTALACION
+  (explicado para dummies, sin tecnicismos)
+====================================================
+
+QUE HAY EN ESTA CARPETA
+-----------------------
+- index.html ............ la app (la pagina web completa)
+- manifest.webmanifest .. la "ficha" que permite instalarla como app
+- sw.js ................. hace que abra rapido y funcione sin internet
+- iconos/ ............... los iconos que veras en tu pantalla de inicio
+
+
+OPCION A - PROBARLA YA MISMO (sin instalar nada)
+------------------------------------------------
+1. Haz doble clic (o toca) el archivo "index.html".
+2. Se abre en tu navegador y ya funciona.
+   * Asi de simple. Lo unico: abierta como archivo suelto,
+     las notificaciones pueden no funcionar en algunos navegadores.
+     Para la experiencia completa, sigue con la Opcion B.
+
+
+OPCION B - INSTALARLA COMO APP DE VERDAD (recomendado)
+------------------------------------------------------
+Para que se pueda "instalar" con icono propio, la carpeta tiene
+que estar publicada en internet. Es gratis y se hace en 2 minutos:
+
+PASO 1: Publicar la carpeta (elige UNA de estas webs gratuitas)
+
+   >> netlify.com  (la mas facil)
+      1. Entra en https://app.netlify.com/drop
+      2. Crea una cuenta gratis si te la pide (con Google vale).
+      3. ARRASTRA esta carpeta entera a la zona de "Drop".
+      4. En unos segundos te da una direccion tipo:
+         https://algo-random.netlify.app
+      5. Esa direccion ES tu app. Guardala.
+
+   >> tiiny.host  (alternativa, sin arrastrar carpetas)
+      1. Comprime esta carpeta en un .zip (si no lo esta ya).
+      2. Entra en https://tiiny.host y sube el zip.
+      3. Te da tu direccion web al momento.
+
+PASO 2: Instalarla en tu movil
+
+   ANDROID (Chrome):
+      1. Abre tu direccion (la de netlify) en Chrome.
+      2. Toca el boton "Instalar app" que aparece en la propia
+         pagina, o el menu de los 3 puntitos > "Anadir a pantalla
+         de inicio" / "Instalar aplicacion".
+      3. Ya tienes el icono en tu pantalla, como cualquier app.
+
+   IPHONE / IPAD (Safari):
+      1. Abre tu direccion en Safari.
+      2. Toca "Instalar app" en la pagina y sigue los pasos que
+         te muestra, o directamente: boton Compartir (cuadrado
+         con flecha) > "Anadir a pantalla de inicio" > Anadir.
+
+   ORDENADOR (Chrome / Edge):
+      1. Abre tu direccion.
+      2. Veras un iconito de instalar en la barra de direcciones
+         (un monitor con una flecha). Clic y listo.
+
+
+COMO SE USA
+-----------
+- Al abrirla, comprueba sola el estado de los jets.
+- Se re-comprueba cada 30 minutos automaticamente.
+- Pulsa "Activar notificaciones" para que te avise sin mirar.
+- "Probar alarma" te deja escuchar la sirena de prueba.
+- Si el nivel llega a 4 o 5: sirena + pantalla roja + notificacion.
+
+IMPORTANTE: la app comprueba mientras esta abierta (aunque sea en
+segundo plano en una pestana). No es un servicio del gobierno;
+es un experimento basado en el proyecto open source "ews" de
+Kyle McDonald (github.com/kylemcdonald/ews). Para emergencias
+reales, haz caso siempre a las autoridades.
+
+NOVEDAD: VERIFICACION CRUZADA (3 FUENTES)
+-----------------------------------------
+La app ya no se fia de una sola fuente. Ahora consulta:
+
+  1. EWS (ews.kylemcdonald.net) ....... la fuente oficial, da el
+     nivel de emergencia del 1 al 5.
+  2. adsb.lol ......................... red independiente de
+     radioaficionados que ve los aviones en crudo.
+  3. airplanes.live ................... otra red independiente,
+     con antenas y servidores distintos.
+
+Como funciona (para dummies):
+- Con las fuentes 2 y 3, la app cuenta cuantos jets privados de los
+  modelos mas comunes estan volando sobre EE.UU. en ese momento.
+- Durante las primeras ~4 horas "aprende" cuanto es lo normal en
+  cada red (veras "aprendiendo lo normal" en el panel de fuentes).
+- Si algun dia EWS grita NIVEL 5, la app mira al instante lo que
+  ven las otras dos redes:
+    * Si ellas tambien ven muchisimos mas jets de lo habitual:
+      "ALARMA CONFIRMADA" (la cosa va en serio).
+    * Si ellas ven un dia normal: "NO CONFIRMADA - posible falso
+      positivo" (respira antes de asustarte).
+- El resultado aparece en el panel "Fuentes de datos" y tambien
+  dentro de la notificacion de alarma.
+
+Nota: lo aprendido se guarda en tu propio dispositivo. Si borras
+los datos del navegador, la app simplemente vuelve a aprender.

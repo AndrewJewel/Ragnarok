@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ragnarok · Monitor de jets</title>
+<meta name="description" content="Monitor personal del Apocalypse Early Warning System: vigila los jets privados y te avisa si hay señales de catástrofe.">
+<meta name="theme-color" content="#0B1015">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="iconos/icono-192.png">
+<style>
+:root{
+  --fondo:#0A0E14;
+  --cristal:rgba(255,255,255,.055);
+  --cristal-2:rgba(255,255,255,.09);
+  --borde:rgba(255,255,255,.13); --borde-fuerte:rgba(255,255,255,.22);
+  --tinta:#EEF3F8; --tinta-2:rgba(238,243,248,.72); --tinta-3:rgba(238,243,248,.5);
+  --ambar:#F2C14E; --rojo:#F25C54; --verde:#4ADBC0;
+  --desenfoque:blur(20px) saturate(150%);
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --ease-io:cubic-bezier(0.77,0,0.175,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;background:var(--fondo);color:var(--tinta);
+  font-family:'Avenir Next','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+  font-size:16px;line-height:1.6;
+  padding:clamp(14px,4vw,44px);
+  padding-bottom:calc(clamp(14px,4vw,44px) + env(safe-area-inset-bottom));
+  overflow-x:hidden;
+}
+.fondo{position:fixed;inset:-20%;z-index:-1;pointer-events:none;filter:blur(70px);opacity:.55;
+  transition:opacity 800ms ease}
+.blob{position:absolute;border-radius:50%}
+.b1{width:55vmax;height:55vmax;left:-15vmax;top:-18vmax;
+  background:radial-gradient(circle,rgba(74,219,192,.5),transparent 65%);
+  animation:flotar1 26s ease-in-out infinite alternate}
+.b2{width:48vmax;height:48vmax;right:-14vmax;top:10vmax;
+  background:radial-gradient(circle,rgba(242,193,78,.4),transparent 65%);
+  animation:flotar2 32s ease-in-out infinite alternate}
+.b3{width:50vmax;height:50vmax;left:20vmax;bottom:-22vmax;
+  background:radial-gradient(circle,rgba(83,120,242,.35),transparent 65%);
+  animation:flotar1 38s ease-in-out infinite alternate-reverse}
+@keyframes flotar1{to{transform:translate(6vmax,4vmax) scale(1.08)}}
+@keyframes flotar2{to{transform:translate(-5vmax,6vmax) scale(1.05)}}
+body.alarma .fondo{opacity:.75}
+body.alarma .b1{background:radial-gradient(circle,rgba(242,92,84,.55),transparent 65%)}
+body.alarma .b3{background:radial-gradient(circle,rgba(242,92,84,.4),transparent 65%)}
+
+.mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+.contenedor{max-width:880px;margin:0 auto;display:grid;gap:16px}
+
+.entrada{opacity:0;transform:translateY(10px);animation:aparecer 500ms var(--ease-out) forwards}
+.entrada:nth-child(1){animation-delay:0ms}
+.entrada:nth-child(2){animation-delay:60ms}
+.entrada:nth-child(3){animation-delay:120ms}
+.entrada:nth-child(4){animation-delay:180ms}
+.entrada:nth-child(5){animation-delay:240ms}
+.entrada:nth-child(6){animation-delay:300ms}
+@keyframes aparecer{to{opacity:1;transform:translateY(0)}}
+
+.panel{
+  background:var(--cristal);
+  -webkit-backdrop-filter:var(--desenfoque);backdrop-filter:var(--desenfoque);
+  border:1px solid var(--borde);border-radius:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09), 0 12px 32px rgba(0,0,0,.28);
+  padding:clamp(16px,3.4vw,30px);position:relative;
+}
+.panel-alarma{border-color:rgba(242,92,84,.6)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .panel,.btn,.chip-estado,.estadistica,dialog{background:rgba(20,27,38,.92)!important}
+}
+.halo::after{content:"";position:absolute;inset:-1px;border-radius:20px;pointer-events:none;
+  border:1px solid rgba(242,92,84,0);animation:halo 1.4s var(--ease-io) infinite}
+@keyframes halo{0%,100%{border-color:rgba(242,92,84,0)}50%{border-color:rgba(242,92,84,.8)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:46px;padding:10px 18px;border-radius:14px;
+  border:1px solid var(--borde-fuerte);
+  background:var(--cristal-2);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  color:var(--tinta);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+  font:inherit;font-size:14.5px;font-weight:600;cursor:pointer;
+  transition:background-color 180ms ease,border-color 180ms ease,transform 160ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.32)}
+  .btn-primario:hover{background:#F7CE6B;border-color:#F7CE6B}
+  a:hover{text-decoration-color:var(--ambar)}
+  .fila-hist:hover{background:rgba(255,255,255,.06)}
+}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:focus-visible,.btn-plano:focus-visible,a:focus-visible{outline:2px solid var(--ambar);outline-offset:2px;border-radius:14px}
+.btn-primario{background:var(--ambar);border-color:var(--ambar);color:#14100A;
+  box-shadow:0 6px 20px rgba(242,193,78,.25), inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-plano{background:none;border:none;color:var(--tinta);padding:6px 4px;min-height:44px;
+  display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:600;cursor:pointer;font-size:15.5px;text-align:left}
+.btn svg,.btn-plano svg{flex-shrink:0}
+.oculto{display:none !important}
+
+.giro{animation:girar 700ms linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.barrido{animation:girarBarrido 1.6s var(--ease-io) infinite;transform-origin:170px 168px}
+@keyframes girarBarrido{from{transform:rotate(0)}to{transform:rotate(180deg)}}
+
+.led{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.led-ok{background:var(--verde);box-shadow:0 0 8px rgba(74,219,192,.8);animation:latido 2.4s ease-in-out infinite}
+.led-alarma{background:var(--rojo);box-shadow:0 0 8px rgba(242,92,84,.9);animation:latido .9s ease-in-out infinite}
+.led-error{background:#F58B51;animation:latido 1.6s ease-in-out infinite}
+@keyframes latido{0%,100%{opacity:1}50%{opacity:.35}}
+.parpadeo-suave{animation:latido 1.1s ease-in-out infinite}
+
+.cabecera{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.28em;color:var(--ambar);text-transform:uppercase;
+  display:flex;align-items:center;gap:8px}
+h1{margin:4px 0 0;font-size:clamp(26px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+.chip-estado{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--tinta-2);
+  border:1px solid var(--borde);border-radius:999px;padding:9px 15px;
+  background:var(--cristal);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+#zonaDial svg{width:100%;max-width:400px;display:block;margin:0 auto;overflow:visible}
+.centro-texto{text-align:center;margin-top:2px;min-height:76px}
+.titulo-nivel{font-size:clamp(19px,3.6vw,26px);font-weight:700;letter-spacing:.06em;transition:color 300ms ease}
+.resumen{font-size:14.5px;color:var(--tinta-2);margin:6px auto 0;max-width:58ch}
+.aviso-error{display:inline-flex;align-items:center;gap:8px;color:#F58B51;font-size:14.5px;max-width:60ch}
+
+.esqueleto{position:relative;overflow:hidden;background:rgba(255,255,255,.08);border-radius:8px;color:transparent!important}
+.esqueleto::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  transform:translateX(-100%);animation:brillo 1.2s var(--ease-io) infinite}
+@keyframes brillo{to{transform:translateX(100%)}}
+
+.estadisticas{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:22px}
+.estadistica{border:1px solid var(--borde);border-radius:16px;padding:14px 16px;
+  background:rgba(255,255,255,.04);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+  display:flex;flex-direction:column;gap:2px;min-height:74px;justify-content:center;
+  transition:background-color 450ms ease}
+.estadistica .valor{font-size:20px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.estadistica .clave{font-size:12px;color:var(--tinta-3);text-transform:uppercase;letter-spacing:.09em;
+  display:flex;align-items:center;gap:6px}
+
+.controles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.controles .btn{width:100%}
+
+.ayuda-cuerpo{display:grid;grid-template-rows:0fr;transition:grid-template-rows 280ms var(--ease-out)}
+.ayuda-cuerpo.abierta{grid-template-rows:1fr}
+.ayuda-interior{overflow:hidden;max-width:68ch}
+.ayuda-texto{font-size:14.5px;line-height:1.7;color:var(--tinta-2);padding-top:12px}
+.ayuda-texto strong{color:var(--tinta)}
+.flechita{transition:transform 220ms var(--ease-out)}
+.flechita.abierta{transform:rotate(180deg)}
+
+.fila-hist{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:8px 10px;border-radius:12px;
+  min-height:40px;opacity:0;transform:translateY(6px);animation:aparecer 350ms var(--ease-out) forwards;
+  transition:background-color 180ms ease}
+.punto{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.hora-hist{color:var(--tinta-3);flex-shrink:0}
+.texto-hist{color:var(--tinta-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.titulo-seccion{display:flex;align-items:center;gap:8px;font-size:12.5px;text-transform:uppercase;
+  letter-spacing:.11em;color:var(--tinta-3);margin-bottom:8px}
+
+.fila-fuente{display:flex;align-items:center;gap:10px;font-size:13.5px;padding:9px 10px;border-radius:12px;min-height:44px}
+.nombre-fuente{font-weight:600;min-width:118px;flex-shrink:0}
+.dato-fuente{color:var(--tinta-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.veredicto{display:flex;align-items:center;gap:10px;margin-top:10px;padding:12px 14px;border-radius:14px;
+  font-size:14px;font-weight:600;border:1px solid var(--borde);line-height:1.5}
+.veredicto svg{flex-shrink:0}
+.veredicto-ok{background:rgba(74,219,192,.12);border-color:rgba(74,219,192,.4);color:var(--verde)}
+.veredicto-mal{background:rgba(242,92,84,.14);border-color:rgba(242,92,84,.5);color:var(--rojo)}
+.veredicto-duda{background:rgba(242,193,78,.12);border-color:rgba(242,193,78,.4);color:var(--ambar)}
+@media (max-width:480px){
+  .nombre-fuente{min-width:96px}
+  .dato-fuente{white-space:normal}
+}
+
+a{color:var(--ambar);text-decoration-color:rgba(242,193,78,.4);text-underline-offset:3px}
+footer{text-align:center;font-size:12.5px;color:var(--tinta-3);padding-bottom:8px;max-width:70ch;margin:0 auto}
+
+dialog{background:rgba(22,29,40,.75);color:var(--tinta);border:1px solid var(--borde-fuerte);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
+  border-radius:20px;padding:24px;max-width:min(92vw,440px);font-size:14.5px;line-height:1.65}
+dialog::backdrop{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+dialog h2{margin:0 0 10px;font-size:18px}
+dialog ol{margin:0 0 16px;padding-left:20px}
+dialog li{margin-bottom:6px}
+
+@media (max-width:480px){
+  body{font-size:15.5px}
+  .cabecera{flex-direction:column;align-items:flex-start;gap:10px}
+  .controles{grid-template-columns:1fr 1fr}
+  .controles .btn{padding:10px 10px;font-size:13.5px}
+  .estadisticas{grid-template-columns:1fr 1fr}
+  .estadistica:last-child{grid-column:1 / -1}
+  .panel{border-radius:16px}
+  .texto-hist{white-space:normal}
+}
+@media (max-width:340px){
+  .controles{grid-template-columns:1fr}
+  .estadisticas{grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .entrada,.fila-hist{animation-duration:1ms!important}
+  .giro,.barrido,.halo::after,.esqueleto::after,.b1,.b2,.b3{animation:none!important}
+  .led-ok,.led-alarma,.led-error,.parpadeo-suave{animation-duration:4s!important}
+  body,.btn,.flechita,.ayuda-cuerpo{transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<div class="fondo" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+<div class="contenedor">
+
+  <header class="cabecera entrada">
+    <div>
+      <div class="eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        Sistema de alerta temprana · Jets privados
+      </div>
+      <h1>Ragnarok</h1>
+    </div>
+    <div class="chip-estado mono">
+      <span class="led led-ok" id="led"></span>
+      <span id="txtEstado">EN LÍNEA</span>
+    </div>
+  </header>
+
+  <section class="panel entrada" id="panelPrincipal" aria-live="polite">
+    <div id="zonaDial"></div>
+    <div class="centro-texto" id="centroTexto">
+      <div class="mono esqueleto" style="width:240px;height:26px;margin:0 auto">cargando</div>
+      <div class="esqueleto" style="width:320px;max-width:90%;height:16px;margin:10px auto 0">cargando</div>
+    </div>
+    <div class="estadisticas">
+      <div class="estadistica" id="est1">
+        <span class="mono valor" id="valAviones">—</span>
+        <span class="clave">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          Aviones en el aire
+        </span>
+      </div>
+      <div class="estadistica" id="est2">
+        <span class="mono valor" id="valEsperado">—</span>
+        <span class="clave">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+          Promedio regular
+        </span>
+      </div>
+      <div class="estadistica" id="est3">
+        <span class="mono valor" id="valUltima">—</span>
+        <span class="clave">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          Última alerta niv. 5
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel entrada" id="panelFuentes">
+    <div class="titulo-seccion">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+      Fuentes de datos · verificación cruzada
+    </div>
+    <div id="listaFuentes">
+      <div class="fila-fuente"><span class="led led-ok parpadeo-suave"></span><span class="nombre-fuente">EWS (oficial)</span><span class="mono dato-fuente">consultando…</span></div>
+      <div class="fila-fuente"><span class="led led-ok parpadeo-suave"></span><span class="nombre-fuente">adsb.lol</span><span class="mono dato-fuente">consultando…</span></div>
+      <div class="fila-fuente"><span class="led led-ok parpadeo-suave"></span><span class="nombre-fuente">airplanes.live</span><span class="mono dato-fuente">consultando…</span></div>
+    </div>
+    <div id="zonaVeredicto"></div>
+  </section>
+
+  <section class="panel controles entrada">
+    <button class="btn btn-primario" id="btnComprobar">
+      <svg id="icoRefrescar" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+      <span id="txtComprobar">Comprobar ahora</span>
+    </button>
+    <button class="btn" id="btnAuto" aria-pressed="true">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" fill="none" stroke="rgba(230,237,243,.15)" stroke-width="2.5"/>
+        <circle id="anillo" cx="11" cy="11" r="8" fill="none" stroke="#F2C14E" stroke-width="2.5"
+          stroke-linecap="round" stroke-dasharray="50.27" stroke-dashoffset="0"
+          transform="rotate(-90 11 11)" style="transition:stroke-dashoffset 1s linear"/>
+      </svg>
+      <span class="mono" id="txtAuto">Próxima en 30:00</span>
+    </button>
+    <button class="btn" id="btnNotif">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+      <span id="txtNotif">Activar notificaciones</span>
+    </button>
+    <button class="btn" id="btnProbar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+      Probar alarma
+    </button>
+    <button class="btn btn-primario oculto" id="btnInstalar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
+      Instalar app
+    </button>
+  </section>
+
+  <section class="panel entrada">
+    <button class="btn-plano" id="btnAyuda" aria-expanded="false">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F2C14E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>
+      ¿Cómo funciona esto? (para dummies)
+      <svg class="flechita" id="flechaAyuda" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="ayuda-cuerpo" id="cuerpoAyuda">
+      <div class="ayuda-interior">
+        <div class="ayuda-texto">
+          <p style="margin:0 0 10px"><strong>La idea:</strong> los millonarios y ejecutivos con jet privado a veces se enteran de las cosas antes que nosotros. Si de repente despegan muchísimos más jets privados de lo normal en EE.UU., puede ser señal de que algo gordo está pasando (crisis, guerra, catástrofe…) antes de que salga en las noticias.</p>
+          <p style="margin:0 0 10px"><strong>Quién hace el trabajo duro:</strong> el sistema EWS de Kyle McDonald vigila esos jets 24/7 con datos públicos de vuelo y calcula un nivel de emergencia del 1 al 5.</p>
+          <p style="margin:0 0 10px"><strong>¿Qué significa "promedio regular"?</strong> Es cuántos jets <em>suele</em> haber en el aire a esta misma hora un día normal (el sistema aprende el patrón: entre semana hay más, de madrugada menos, en festivos cambia…). La alarma no salta por haber muchos aviones, sino por haber muchos <em>más que el promedio regular</em>: eso es lo raro.</p>
+          <p style="margin:0 0 10px"><strong>Verificación cruzada (el "detector de mentiras"):</strong> para no fiarnos de una sola voz, la app también pregunta a dos redes independientes de radioaficionados (<a href="https://www.adsb.lol" target="_blank" rel="noopener">adsb.lol</a> y <a href="https://airplanes.live" target="_blank" rel="noopener">airplanes.live</a>) cuántos jets privados de los modelos más comunes ven volando sobre EE.UU. Con los primeros chequeos aprende sola cuánto es "lo normal" en cada red. Si algún día EWS grita nivel 5, comprueba al instante si esas redes también ven el cielo lleno de jets: si lo confirman, la cosa va en serio; si ven un día normal, te avisa de que probablemente es un falso positivo.</p>
+          <p style="margin:0 0 12px"><strong>Qué hace esta app:</strong> cada 30 minutos lee el canal público de alertas de ese sistema. Ese canal solo "grita" cuando se alcanza el nivel 5 (emergencia oficial). Si eso pasa, te avisa con sirena, notificación y pantalla de alarma. El resto del tiempo verás nivel 1: sin señales de emergencia.</p>
+          <p style="margin:0;font-size:13px;color:var(--tinta-3)">
+            Experimento curioso, no protección civil oficial. Para emergencias reales, haz caso a las autoridades.
+            <a href="https://ews.kylemcdonald.net/" target="_blank" rel="noopener">ews.kylemcdonald.net</a> ·
+            <a href="https://github.com/kylemcdonald/ews" target="_blank" rel="noopener">código fuente</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel entrada oculto" id="panelHistorial">
+    <div class="titulo-seccion">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Historial de esta sesión
+    </div>
+    <div id="listaHistorial"></div>
+  </section>
+
+  <footer class="entrada">
+    Basado en el proyecto open source "ews" de Kyle McDonald. Los datos provienen del sistema público, no de esta app.
+  </footer>
+</div>
+
+<dialog id="dlgIos">
+  <h2>Instalar en iPhone / iPad</h2>
+  <ol>
+    <li>Abre esta página en <strong>Safari</strong>.</li>
+    <li>Toca el botón <strong>Compartir</strong> (el cuadrado con la flecha hacia arriba).</li>
+    <li>Elige <strong>"Añadir a pantalla de inicio"</strong>.</li>
+    <li>Toca <strong>Añadir</strong>. ¡Ya tienes la app con su icono!</li>
+  </ol>
+  <button class="btn" onclick="document.getElementById('dlgIos').close()">Entendido</button>
+</dialog>
+
+<dialog id="dlgAndroid">
+  <h2>Instalar en Android / ordenador</h2>
+  <ol>
+    <li>Abre esta página en <strong>Chrome</strong> (o Edge).</li>
+    <li>Toca el menú de los <strong>3 puntitos</strong> (arriba a la derecha).</li>
+    <li>Elige <strong>"Añadir a pantalla de inicio"</strong> o <strong>"Instalar aplicación"</strong>.</li>
+    <li>Confirma. ¡Ya tienes el icono del dragón en tu pantalla!</li>
+  </ol>
+  <p style="margin:0 0 16px;font-size:13px;color:var(--tinta-3)">En ordenador: busca el iconito de instalar en la barra de direcciones.</p>
+  <button class="btn" onclick="document.getElementById('dlgAndroid').close()">Entendido</button>
+</dialog>
+
+<dialog id="dlgArchivo">
+  <h2>Un paso antes de instalar</h2>
+  <p style="margin:0 0 12px">Estás abriendo Ragnarok como <strong>archivo suelto</strong>, y los móviles solo permiten instalar apps que estén <strong>publicadas en internet</strong> (norma de seguridad).</p>
+  <ol>
+    <li>Entra en <strong>app.netlify.com/drop</strong> (gratis).</li>
+    <li>Arrastra la carpeta "ragnarok" completa.</li>
+    <li>Abre la dirección que te da (algo.netlify.app) en tu móvil.</li>
+    <li>Ahí sí: toca "Instalar app". ✓</li>
+  </ol>
+  <p style="margin:0 0 16px;font-size:13px;color:var(--tinta-3)">El archivo LEEME-INSTALACION.txt de la carpeta lo explica con más detalle.</p>
+  <button class="btn" onclick="document.getElementById('dlgArchivo').close()">Entendido</button>
+</dialog>
+
+<script>
+"use strict";
+const NIVELES = {
+  1:{nombre:"Tranquilo", color:"#4ADBC0", tinte:"rgba(74,219,192,.12)"},
+  2:{nombre:"Normal",    color:"#8FD16A", tinte:"rgba(143,209,106,.12)"},
+  3:{nombre:"Atención",  color:"#F2C14E", tinte:"rgba(242,193,78,.12)"},
+  4:{nombre:"Alerta",    color:"#F58B51", tinte:"rgba(245,139,81,.14)"},
+  5:{nombre:"Emergencia",color:"#F25C54", tinte:"rgba(242,92,84,.16)"}
+};
+const INTERVALO_SEG = 30*60;
+const CIRC = 2*Math.PI*8;
+let nivelActual = null, alarmaActiva = false, segRestantes = INTERVALO_SEG;
+let autoActivo = true, comprobando = false, ultimoNivelAvisado = null;
+
+/* ---------- Dial ---------- */
+function pintarDial(nivel, cargando){
+  const cx=170, cy=168, rExt=148, rInt=106;
+  const p=(a,r)=>[cx+r*Math.cos(a), cy+r*Math.sin(a)];
+  let segs="", ticks="", nums="";
+  for(let i=0;i<5;i++){
+    const a0=Math.PI+(i*Math.PI)/5+0.016, a1=Math.PI+((i+1)*Math.PI)/5-0.016;
+    const [x0e,y0e]=p(a0,rExt),[x1e,y1e]=p(a1,rExt),[x0i,y0i]=p(a0,rInt),[x1i,y1i]=p(a1,rInt);
+    const activo = nivel!==null && nivel>=i+1;
+    segs += `<path d="M ${x0e} ${y0e} A ${rExt} ${rExt} 0 0 1 ${x1e} ${y1e} L ${x1i} ${y1i} A ${rInt} ${rInt} 0 0 0 ${x0i} ${y0i} Z"
+      fill="${activo?NIVELES[i+1].color:'rgba(230,237,243,.06)'}"
+      stroke="${activo?'rgba(0,0,0,.25)':'transparent'}" stroke-width="1"
+      style="transition:fill 450ms cubic-bezier(0.23,1,0.32,1)"/>`;
+  }
+  for(let i=0;i<=20;i++){
+    const a=Math.PI+(i*Math.PI)/20, mayor=i%4===0, r1=rExt+6, r2=rExt+(mayor?16:11);
+    ticks += `<line x1="${cx+r1*Math.cos(a)}" y1="${cy+r1*Math.sin(a)}" x2="${cx+r2*Math.cos(a)}" y2="${cy+r2*Math.sin(a)}"
+      stroke="rgba(230,237,243,.22)" stroke-width="${mayor?2:1}" stroke-linecap="round"/>`;
+  }
+  for(let n=1;n<=5;n++){
+    const a=Math.PI+((n-0.5)*Math.PI)/5, x=cx+127*Math.cos(a), y=cy+127*Math.sin(a);
+    const activo = nivel!==null && nivel>=n;
+    nums += `<text x="${x}" y="${y+5.5}" text-anchor="middle" font-size="17" font-weight="700"
+      fill="${activo?'#0B1015':'rgba(230,237,243,.4)'}"
+      font-family="ui-monospace,'SF Mono',Menlo,monospace"
+      style="transition:fill 450ms cubic-bezier(0.23,1,0.32,1)">${n}</text>`;
+  }
+  const ang = nivel===null ? 180 : 180+((nivel-0.5)/5)*180;
+  const colorAguja = alarmaActiva ? "#F25C54" : "#E6EDF3";
+  const barrido = cargando ? `<g class="barrido"><line x1="${cx}" y1="${cy}" x2="${cx-rExt}" y2="${cy}"
+    stroke="rgba(242,193,78,.55)" stroke-width="2" stroke-linecap="round"/></g>` : "";
+  document.getElementById("zonaDial").innerHTML = `
+  <svg viewBox="0 0 340 196" role="img" aria-label="${nivel?`Nivel de alerta ${nivel} de 5: ${NIVELES[nivel].nombre}`:"Nivel de alerta desconocido"}">
+    ${ticks}${segs}${barrido}${nums}
+    <g style="transform:rotate(${ang}deg);transform-origin:${cx}px ${cy}px;transition:transform 800ms cubic-bezier(0.34,1.35,0.5,1)">
+      <line x1="${cx+14}" y1="${cy}" x2="${cx+96}" y2="${cy}" stroke="${colorAguja}" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <circle cx="${cx}" cy="${cy}" r="12" fill="#161D26" stroke="${alarmaActiva?'#F25C54':'rgba(230,237,243,.35)'}" stroke-width="2"/>
+    <circle cx="${cx}" cy="${cy}" r="4" fill="${colorAguja}"/>
+  </svg>`;
+}
+
+/* ---------- Obtención de datos ---------- */
+/* El sistema EWS publica su snapshot en vivo en este almacén público (CORS abierto).
+   Campos confirmados en el código fuente del proyecto:
+   current.concurrentCount (jets en el aire), current.baselineMean (promedio regular),
+   current.emergencyLevel (nivel 1-5), current.asOf (fecha del dato). */
+const URL_DATOS = "https://pub-49bb6a6f314c47be9b481c25e5f6ca9e.r2.dev/dashboard.json";
+const URL_RSS = "https://ews.kylemcdonald.net/rss.xml";
+const PROXIES = [
+  u => u,
+  u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
+  u => "https://corsproxy.io/?url=" + encodeURIComponent(u)
+];
+
+async function intentarFetch(url){
+  for(const envolver of PROXIES){
+    try{
+      const r = await fetch(envolver(url), {cache:"no-store"});
+      if(r.ok){ const t = await r.text(); if(t && t.length>10) return t; }
+    }catch(e){}
+  }
+  return null;
+}
+
+/* ---------- Fuentes independientes (verificación cruzada) ----------
+   Dos redes de radioaficionados, independientes entre sí y del EWS,
+   que ven los mismos aviones en crudo. Contamos cuántos jets privados
+   de los modelos más comunes están volando sobre EE.UU. ahora mismo.
+   La app aprende sola el promedio de cada fuente (localStorage) y lo
+   usa para confirmar o desmentir una alarma de nivel 4-5. */
+const TIPOS_JET = ["GLF5","GLF6","GLEX","CL30","CL35","CL60","C750","C56X","C68A","E55P","F2TH","PC24"];
+const FUENTES_IND = [
+  {id:"adsblol",       nombre:"adsb.lol",       base:"https://api.adsb.lol/v2/type/"},
+  {id:"airplaneslive", nombre:"airplanes.live", base:"https://api.airplanes.live/v2/type/"}
+];
+const CLAVE_MEMORIA = "ragnarok_memoria_v1";
+const MUESTRAS_MINIMAS = 8;   // muestras necesarias antes de emitir veredicto
+const UMBRAL_Z = 2.5;         // cuántas desviaciones por encima de lo normal = anómalo
+
+function esSobreEEUU(a){
+  return typeof a.lat==="number" && typeof a.lon==="number" &&
+         a.lat>=24 && a.lat<=50 && a.lon>=-125 && a.lon<=-66;
+}
+
+async function contarFuente(f){
+  let lista=null;
+  // Intento rápido: todos los tipos en una sola petición (si la red lo acepta)
+  const junta = await intentarFetch(f.base + TIPOS_JET.join(","));
+  if(junta){ try{ const d=JSON.parse(junta); if(Array.isArray(d.ac)) lista=d.ac; }catch(e){} }
+  // Plan B: tipo a tipo, respetando el límite de ~1 petición por segundo
+  if(lista===null){
+    lista=[]; let hubo=false;
+    for(const t of TIPOS_JET){
+      const txt = await intentarFetch(f.base + t);
+      if(txt){ try{ const d=JSON.parse(txt); if(Array.isArray(d.ac)){ hubo=true; lista.push(...d.ac); } }catch(e){} }
+      await new Promise(r=>setTimeout(r,1100));
+    }
+    if(!hubo) return null;
+  }
+  const vistos=new Set();
+  for(const a of lista){
+    if(a && a.hex && a.alt_baro!=="ground" && esSobreEEUU(a)) vistos.add(a.hex);
+  }
+  return vistos.size;
+}
+
+function leerMemoria(){ try{ return JSON.parse(localStorage.getItem(CLAVE_MEMORIA)||"{}"); }catch(e){ return {}; } }
+function guardarMuestra(id,n){
+  try{
+    const m=leerMemoria();
+    (m[id]=m[id]||[]).push({t:Date.now(),n});
+    m[id]=m[id].slice(-96); // ~2 días de historia con chequeos cada 30 min
+    localStorage.setItem(CLAVE_MEMORIA, JSON.stringify(m));
+  }catch(e){}
+}
+function estadisticaFuente(id){
+  const xs=(leerMemoria()[id]||[]).map(x=>x.n);
+  if(xs.length<MUESTRAS_MINIMAS) return {listo:false, cuantas:xs.length};
+  const media=xs.reduce((s,x)=>s+x,0)/xs.length;
+  const varianza=xs.reduce((s,x)=>s+(x-media)*(x-media),0)/xs.length;
+  return {listo:true, media, desv:Math.sqrt(varianza)||1};
+}
+
+async function consultarFuentesIndependientes(){
+  const res={};
+  await Promise.all(FUENTES_IND.map(async f=>{ res[f.id]=await contarFuente(f); }));
+  return res;
+}
+
+function evaluarVerificacion(conteos){
+  const detalle=[]; let confirmas=0, disponibles=0;
+  for(const f of FUENTES_IND){
+    const n=conteos[f.id];
+    if(n===null||n===undefined){ detalle.push({f, clase:"error"}); continue; }
+    guardarMuestra(f.id,n);
+    const est=estadisticaFuente(f.id);
+    if(!est.listo){ detalle.push({f, n, clase:"aprendiendo", cuantas:est.cuantas}); continue; }
+    const z=(n-est.media)/est.desv;
+    disponibles++;
+    const anomalo = z>=UMBRAL_Z;
+    if(anomalo) confirmas++;
+    detalle.push({f, n, z, media:est.media, clase:anomalo?"anomalo":"normal"});
+  }
+  return {detalle, confirmas, disponibles};
+}
+
+function filaFuente(led, nombre, texto){
+  return `<div class="fila-fuente"><span class="led ${led}"></span><span class="nombre-fuente">${nombre}</span><span class="mono dato-fuente">${texto}</span></div>`;
+}
+function pintarFuentes(e, ver){
+  let html = filaFuente(e ? "led-ok" : "led-error", "EWS (oficial)",
+    e ? `${e.aviones ?? "—"} jets en el aire · nivel ${e.nivel}` : "sin respuesta");
+  for(const d of ver.detalle){
+    if(d.clase==="error")            html += filaFuente("led-error", d.f.nombre, "sin respuesta");
+    else if(d.clase==="aprendiendo") html += filaFuente("led-ok", d.f.nombre, `${d.n} jets (muestra) · aprendiendo lo normal (${d.cuantas}/${MUESTRAS_MINIMAS})`);
+    else if(d.clase==="anomalo")     html += filaFuente("led-alarma", d.f.nombre, `${d.n} jets (muestra) · MUY por encima de lo habitual (~${Math.round(d.media)})`);
+    else                             html += filaFuente("led-ok", d.f.nombre, `${d.n} jets (muestra) · normal (~${Math.round(d.media)} habitual)`);
+  }
+  $("listaFuentes").innerHTML = html;
+}
+function pintarVeredicto(nivel, ver){
+  const zona=$("zonaVeredicto");
+  if(nivel===null || nivel<4){ zona.innerHTML=""; return; }
+  let clase, texto;
+  if(ver.disponibles===0){
+    clase="veredicto-duda";
+    texto="Verificación no disponible: las fuentes independientes aún están aprendiendo su patrón normal (o no responden). Tómalo con cautela.";
+  } else if(ver.confirmas===ver.disponibles){
+    clase="veredicto-mal";
+    texto=`ALARMA CONFIRMADA: ${ver.confirmas} de ${ver.disponibles} fuentes independientes también ven una actividad de jets muy anómala.`;
+  } else if(ver.confirmas>0){
+    clase="veredicto-duda";
+    texto=`Confirmación parcial: ${ver.confirmas} de ${ver.disponibles} fuentes independientes ven anomalía. Vigila las noticias.`;
+  } else {
+    clase="veredicto-ok";
+    texto="NO CONFIRMADA: las fuentes independientes ven un día normal. Probable falso positivo del canal oficial; mantén la calma.";
+  }
+  zona.innerHTML=`<div class="veredicto ${clase}">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+    <span>${texto}</span></div>`;
+}
+
+async function obtenerEstado(){
+  const jsonTxt = await intentarFetch(URL_DATOS);
+  let aviones=null, esperado=null, nivel=null, fechaDato=null;
+  if(jsonTxt){
+    try{
+      const d = JSON.parse(jsonTxt);
+      const c = d.current || {};
+      if(typeof c.concurrentCount==="number") aviones = Math.round(c.concurrentCount);
+      if(typeof c.baselineMean==="number") esperado = Math.round(c.baselineMean);
+      if(typeof c.emergencyLevel==="number") nivel = Math.min(5,Math.max(1,Math.round(c.emergencyLevel)));
+      if(c.asOf) fechaDato = new Date(c.asOf);
+    }catch(e){}
+  }
+  const rssTxt = await intentarFetch(URL_RSS);
+  let ultimaAlerta=null, emergenciaRss=false;
+  if(rssTxt){
+    try{
+      const doc = new DOMParser().parseFromString(rssTxt,"text/xml");
+      let masReciente=null;
+      for(const it of doc.querySelectorAll("item")){
+        const f = new Date(it.querySelector("pubDate")?.textContent || 0);
+        if(!masReciente || f>masReciente) masReciente=f;
+      }
+      if(masReciente && !isNaN(masReciente)){
+        ultimaAlerta = masReciente.toLocaleDateString("es",{day:"2-digit",month:"short"});
+        if(Date.now()-masReciente.getTime() < 2*60*60*1000) emergenciaRss=true;
+      }
+    }catch(e){}
+  }
+  if(jsonTxt===null && rssTxt===null) return null;
+  /* El RSS solo decide el nivel como RESPALDO, cuando el JSON oficial no
+     respondió. Así, un item informativo en el feed no dispara la sirena
+     si el dato oficial dice que todo está tranquilo. */
+  if(emergenciaRss && nivel===null) nivel = 5;
+  if(nivel===null) nivel = 1;
+  let resumen;
+  if(nivel===5){
+    resumen = "¡Emergencia oficial nivel 5! Actividad de jets muy por encima de lo normal.";
+  } else if(aviones!==null && esperado!==null){
+    const dif = aviones-esperado;
+    const signo = dif>=0 ? "+" : "";
+    resumen = `${aviones} jets en el aire frente a un promedio regular de ~${esperado} (${signo}${dif}). ${NIVELES[nivel].nombre}.`;
+  } else {
+    resumen = "Sin señales de emergencia en el canal público de alertas.";
+  }
+  const hace = fechaDato ? Math.round((Date.now()-fechaDato.getTime())/60000) : null;
+  if(hace!==null && hace>=0 && hace<600) resumen += ` Dato de hace ${hace} min.`;
+  return {nivel, aviones, esperado, ultimaAlerta, resumen, hora:new Date()};
+}
+
+/* ---------- Alarma ---------- */
+function sonarSirena(){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const dur=2.4, osc=ctx.createOscillator(), gain=ctx.createGain();
+    osc.type="sawtooth"; osc.connect(gain); gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    for(let t=0;t<dur;t+=0.6){
+      osc.frequency.setValueAtTime(520, ctx.currentTime+t);
+      osc.frequency.linearRampToValueAtTime(880, ctx.currentTime+t+0.3);
+      osc.frequency.linearRampToValueAtTime(520, ctx.currentTime+t+0.6);
+    }
+    gain.gain.setValueAtTime(0.12, ctx.currentTime+dur-0.2);
+    gain.gain.linearRampToValueAtTime(0, ctx.currentTime+dur);
+    osc.start(); osc.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+function notificar(titulo,cuerpo){
+  try{
+    if("Notification" in window && Notification.permission==="granted"){
+      /* Solo usamos el service worker si de verdad hay uno controlando la
+         página; si no (p. ej. abierta como archivo suelto), notificación
+         directa. Antes, la espera a un SW inexistente se quedaba colgada. */
+      if(navigator.serviceWorker && navigator.serviceWorker.controller){
+        navigator.serviceWorker.ready.then(reg=>reg.showNotification(titulo,{body:cuerpo,icon:"iconos/icono-192.png"}))
+          .catch(()=>new Notification(titulo,{body:cuerpo}));
+      } else new Notification(titulo,{body:cuerpo});
+    }
+  }catch(e){}
+}
+
+/* ---------- Interfaz ---------- */
+const $ = id => document.getElementById(id);
+
+function ponerModoAlarma(on){
+  alarmaActiva = on;
+  document.body.classList.toggle("alarma", on);
+  $("panelPrincipal").classList.toggle("panel-alarma", on);
+  $("panelPrincipal").classList.toggle("halo", on);
+  const led = $("led");
+  led.className = "led " + (on ? "led-alarma" : "led-ok");
+  $("txtEstado").textContent = on ? "ALARMA ACTIVA" : "EN LÍNEA";
+}
+
+function mostrarEstado(e){
+  const info = NIVELES[e.nivel];
+  $("centroTexto").innerHTML = `
+    <div class="mono titulo-nivel ${e.nivel>=4?'parpadeo-suave':''}" style="color:${info.color}">
+      NIVEL ${e.nivel} · ${info.nombre.toUpperCase()}
+    </div>
+    <p class="resumen">${e.resumen}</p>`;
+  $("valAviones").textContent = e.aviones ?? "—";
+  $("valEsperado").textContent = e.esperado ?? "—";
+  $("valUltima").textContent = e.ultimaAlerta ?? "ninguna reciente";
+  for(const id of ["est1","est2","est3"]) $(id).style.background = info.tinte;
+}
+
+function mostrarError(msg){
+  $("centroTexto").innerHTML = `
+    <div class="aviso-error">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      ${msg}
+    </div>`;
+  $("led").className = "led led-error";
+  $("txtEstado").textContent = "SIN CONEXIÓN";
+}
+
+function agregarHistorial(e){
+  $("panelHistorial").classList.remove("oculto");
+  const lista = $("listaHistorial");
+  const fila = document.createElement("div");
+  fila.className = "fila-hist";
+  fila.innerHTML = `
+    <span class="punto" style="background:${NIVELES[e.nivel].color}"></span>
+    <span class="mono hora-hist">${e.hora.toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"})}</span>
+    <span class="texto-hist">Nivel ${e.nivel} — ${e.resumen}</span>`;
+  lista.prepend(fila);
+  while(lista.children.length>20) lista.lastChild.remove();
+}
+
+/* ---------- Ciclo principal ---------- */
+async function comprobar(){
+  if(comprobando) return;
+  comprobando = true;
+  $("btnComprobar").disabled = true;
+  $("txtComprobar").textContent = "Comprobando…";
+  $("icoRefrescar").classList.add("giro");
+  pintarDial(nivelActual, true);
+  /* EWS y las dos fuentes independientes se consultan a la vez */
+  const [e, conteos] = await Promise.all([obtenerEstado(), consultarFuentesIndependientes()]);
+  const ver = evaluarVerificacion(conteos);
+  pintarFuentes(e, ver);
+  comprobando = false;
+  $("btnComprobar").disabled = false;
+  $("txtComprobar").textContent = "Comprobar ahora";
+  $("icoRefrescar").classList.remove("giro");
+  segRestantes = INTERVALO_SEG;
+  if(e===null){
+    pintarDial(nivelActual, false);
+    mostrarError("No pude conectar con el sistema EWS. Comprueba tu internet; reintento en el próximo ciclo.");
+    return;
+  }
+  nivelActual = e.nivel;
+  ponerModoAlarma(e.nivel>=4);
+  pintarDial(e.nivel, false);
+  mostrarEstado(e);
+  pintarVeredicto(e.nivel, ver);
+  agregarHistorial(e);
+  if(e.nivel>=4 && ultimoNivelAvisado!==e.nivel){
+    ultimoNivelAvisado = e.nivel;
+    sonarSirena();
+    let extra="";
+    if(ver.disponibles>0){
+      extra = ver.confirmas>0
+        ? ` Verificación: ${ver.confirmas}/${ver.disponibles} fuentes independientes CONFIRMAN.`
+        : " NO confirmada por fuentes independientes (posible falso positivo).";
+    }
+    notificar(e.nivel===5?"🚨 EMERGENCIA NIVEL 5":"⚠️ Alerta nivel 4", e.resumen + extra);
+  }
+  if(e.nivel<4) ultimoNivelAvisado=null;
+}
+
+setInterval(()=>{
+  if(!autoActivo || comprobando) return;
+  segRestantes--;
+  if(segRestantes<=0){ comprobar(); segRestantes=INTERVALO_SEG; }
+  const mm=String(Math.floor(segRestantes/60)).padStart(2,"0");
+  const ss=String(segRestantes%60).padStart(2,"0");
+  $("txtAuto").textContent = `Próxima en ${mm}:${ss}`;
+  $("anillo").setAttribute("stroke-dashoffset", CIRC*(1-segRestantes/INTERVALO_SEG));
+},1000);
+
+/* ---------- Botones ---------- */
+$("btnComprobar").addEventListener("click", comprobar);
+$("btnAuto").addEventListener("click", ()=>{
+  autoActivo = !autoActivo;
+  $("btnAuto").setAttribute("aria-pressed", String(autoActivo));
+  $("txtAuto").textContent = autoActivo ? "Próxima en 30:00" : "Auto en pausa · toca para reanudar";
+  if(autoActivo) segRestantes = INTERVALO_SEG;
+});
+$("btnNotif").addEventListener("click", async ()=>{
+  try{
+    const p = await Notification.requestPermission();
+    if(p==="granted"){
+      $("txtNotif").textContent = "Notificaciones activas";
+      $("btnNotif").style.color = "#4ADBC0";
+      $("btnNotif").style.borderColor = "rgba(74,219,192,.35)";
+      $("btnNotif").disabled = true;
+    }
+  }catch(e){}
+});
+if(typeof Notification!=="undefined" && Notification.permission==="granted"){
+  $("txtNotif").textContent = "Notificaciones activas";
+  $("btnNotif").style.color = "#4ADBC0";
+  $("btnNotif").style.borderColor = "rgba(74,219,192,.35)";
+  $("btnNotif").disabled = true;
+}
+$("btnProbar").addEventListener("click", ()=>{
+  sonarSirena();
+  notificar("Prueba de alarma","Así sonará una emergencia real.");
+});
+$("btnAyuda").addEventListener("click", ()=>{
+  const abierto = $("cuerpoAyuda").classList.toggle("abierta");
+  $("flechaAyuda").classList.toggle("abierta", abierto);
+  $("btnAyuda").setAttribute("aria-expanded", String(abierto));
+});
+
+/* ---------- Instalación PWA ---------- */
+let eventoInstalar = null;
+const esIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const yaInstalada = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+const esArchivoLocal = !location.protocol.startsWith("http");
+
+window.addEventListener("beforeinstallprompt", (ev)=>{
+  ev.preventDefault();
+  eventoInstalar = ev;
+});
+
+/* El boton se muestra siempre que la app no este ya instalada.
+   Al pulsarlo decide solo: instalador nativo si existe, o instrucciones. */
+if(!yaInstalada) $("btnInstalar").classList.remove("oculto");
+$("btnInstalar").addEventListener("click", async ()=>{
+  if(eventoInstalar){
+    eventoInstalar.prompt();
+    const eleccion = await eventoInstalar.userChoice;
+    if(eleccion && eleccion.outcome==="accepted"){
+      eventoInstalar = null;
+      $("btnInstalar").classList.add("oculto");
+    }
+    return;
+  }
+  if(esArchivoLocal){ $("dlgArchivo").showModal(); return; }
+  if(esIos){ $("dlgIos").showModal(); return; }
+  $("dlgAndroid").showModal();
+});
+
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
+
+/* ---------- Arranque ---------- */
+pintarDial(null, true);
+comprobar();
+</script>
+</body>
+</html>
