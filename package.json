@@ -1,0 +1,10 @@
+{
+  "name": "ragnarok",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Ragnarok · Monitor de jets privados con verificación cruzada de 3 fuentes y avisos push.",
+  "dependencies": {
+    "web-push": "^3.6.7",
+    "@vercel/kv": "^2.0.0"
+  }
+}
