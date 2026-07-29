@@ -1,0 +1,43 @@
+name: Vigilar Ragnarok
+
+# Dos relojes en un mismo robot:
+#  - */5 * * * *  -> cada 5 minutos, le pide a la app que revise el cielo
+#                    y mande avisos push si hace falta (aunque nadie tenga
+#                    la app abierta).
+#  - 0 12 * * 0   -> cada domingo, hace un cambio minimo en el repositorio
+#                    para que GitHub nunca lo apague por "60 dias sin
+#                    actividad" (asi el robot de arriba nunca se detiene solo).
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+    - cron: '0 12 * * 0'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  comprobar:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '*/5 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pedirle a Ragnarok que revise el cielo y avise si hace falta
+        run: curl -fsS "https://ragnarok-xi.vercel.app/api/comprobar" || true
+
+  mantener_vivo:
+    if: github.event.schedule == '0 12 * * 0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dejar una senal de vida semanal (evita el apagado por 60 dias)
+        run: |
+          mkdir -p .github
+          echo "Ultima senal de vida: $(date -u +'%Y-%m-%d %H:%M UTC')" > .github/ultima-senal.txt
+          git config user.name "ragnarok-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add .github/ultima-senal.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: mantener activo el robot de vigilancia"
+            git push
+          fi
+
