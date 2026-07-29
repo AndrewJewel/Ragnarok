@@ -397,6 +397,7 @@ const INTERVALO_SEG = 30*60;
 const CIRC = 2*Math.PI*8;
 let nivelActual = null, alarmaActiva = false, segRestantes = INTERVALO_SEG;
 let autoActivo = true, comprobando = false, ultimoNivelAvisado = null;
+let ultimoEstado = null, ultimaVer = null;
 
 /* ---------- Dial ---------- */
 function pintarDial(nivel, cargando){
@@ -456,7 +457,12 @@ const PROXIES = [
 async function intentarFetch(url){
   for(const envolver of PROXIES){
     try{
-      const r = await fetch(envolver(url), {cache:"no-store"});
+      /* Tiempo límite de 8 s por intento: una petición colgada no puede
+         congelar toda la app. */
+      const ctrl = new AbortController();
+      const temporizador = setTimeout(()=>ctrl.abort(), 8000);
+      const r = await fetch(envolver(url), {cache:"no-store", signal:ctrl.signal});
+      clearTimeout(temporizador);
       if(r.ok){ const t = await r.text(); if(t && t.length>10) return t; }
     }catch(e){}
   }
@@ -484,14 +490,21 @@ function esSobreEEUU(a){
 }
 
 async function contarFuente(f){
-  let lista=null;
+  let lista=null, vivo=false;
   // Intento rápido: todos los tipos en una sola petición (si la red lo acepta)
   const junta = await intentarFetch(f.base + TIPOS_JET.join(","));
-  if(junta){ try{ const d=JSON.parse(junta); if(Array.isArray(d.ac)) lista=d.ac; }catch(e){} }
-  // Plan B: tipo a tipo, respetando el límite de ~1 petición por segundo
+  if(junta!==null){
+    vivo=true;
+    try{ const d=JSON.parse(junta); if(Array.isArray(d.ac)) lista=d.ac; }catch(e){}
+  }
   if(lista===null){
-    lista=[]; let hubo=false;
+    // Si la red directamente no contesta, mejor rendirse rápido que colgar la app
+    if(!vivo) return null;
+    // Plan B (solo si la red vive pero no acepta comas): tipo a tipo,
+    // respetando ~1 petición/seg y con presupuesto máximo de 25 s
+    lista=[]; let hubo=false; const inicio=Date.now();
     for(const t of TIPOS_JET){
+      if(Date.now()-inicio>25000) break;
       const txt = await intentarFetch(f.base + t);
       if(txt){ try{ const d=JSON.parse(txt); if(Array.isArray(d.ac)){ hubo=true; lista.push(...d.ac); } }catch(e){} }
       await new Promise(r=>setTimeout(r,1100));
@@ -719,10 +732,19 @@ async function comprobar(){
   $("txtComprobar").textContent = "Comprobando…";
   $("icoRefrescar").classList.add("giro");
   pintarDial(nivelActual, true);
-  /* EWS y las dos fuentes independientes se consultan a la vez */
-  const [e, conteos] = await Promise.all([obtenerEstado(), consultarFuentesIndependientes()]);
-  const ver = evaluarVerificacion(conteos);
-  pintarFuentes(e, ver);
+  /* Las fuentes independientes arrancan en paralelo pero NO bloquean al
+     dato oficial: el dial se pinta en cuanto responde el EWS, y el panel
+     de fuentes se actualiza solo cuando ellas terminen. */
+  const promesaVer = consultarFuentesIndependientes().then(conteos=>{
+    const ver = evaluarVerificacion(conteos);
+    ultimaVer = ver;
+    pintarFuentes(ultimoEstado, ver);
+    pintarVeredicto(ultimoEstado ? ultimoEstado.nivel : null, ver);
+    return ver;
+  });
+  const e = await obtenerEstado();
+  ultimoEstado = e;
+  if(ultimaVer!==null) pintarFuentes(e, ultimaVer);
   comprobando = false;
   $("btnComprobar").disabled = false;
   $("txtComprobar").textContent = "Comprobar ahora";
@@ -737,18 +759,21 @@ async function comprobar(){
   ponerModoAlarma(e.nivel>=4);
   pintarDial(e.nivel, false);
   mostrarEstado(e);
-  pintarVeredicto(e.nivel, ver);
   agregarHistorial(e);
   if(e.nivel>=4 && ultimoNivelAvisado!==e.nivel){
     ultimoNivelAvisado = e.nivel;
+    /* La sirena y el primer aviso salen YA, sin esperar la verificación */
     sonarSirena();
-    let extra="";
-    if(ver.disponibles>0){
-      extra = ver.confirmas>0
-        ? ` Verificación: ${ver.confirmas}/${ver.disponibles} fuentes independientes CONFIRMAN.`
-        : " NO confirmada por fuentes independientes (posible falso positivo).";
-    }
-    notificar(e.nivel===5?"🚨 EMERGENCIA NIVEL 5":"⚠️ Alerta nivel 4", e.resumen + extra);
+    notificar(e.nivel===5?"🚨 EMERGENCIA NIVEL 5":"⚠️ Alerta nivel 4", e.resumen);
+    /* Cuando las fuentes independientes terminen, se añade el veredicto */
+    promesaVer.then(ver=>{
+      if(ver.disponibles>0){
+        const texto = ver.confirmas>0
+          ? `Verificación: ${ver.confirmas}/${ver.disponibles} fuentes independientes CONFIRMAN la anomalía.`
+          : "Las fuentes independientes ven un día normal: posible falso positivo.";
+        notificar(ver.confirmas>0 ? "🔴 Alarma verificada" : "🟢 Posible falso positivo", texto);
+      }
+    });
   }
   if(e.nivel<4) ultimoNivelAvisado=null;
 }
