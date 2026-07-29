@@ -303,10 +303,6 @@ dialog li{margin-bottom:6px}
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
       <span id="txtNotif">Activar notificaciones</span>
     </button>
-    <button class="btn" id="btnPush">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-      <span id="txtPush">Avisos con la app cerrada</span>
-    </button>
     <button class="btn" id="btnProbar">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
       Probar alarma
@@ -331,7 +327,7 @@ dialog li{margin-bottom:6px}
           <p style="margin:0 0 10px"><strong>¿Qué significa "promedio regular"?</strong> Es cuántos jets <em>suele</em> haber en el aire a esta misma hora un día normal (el sistema aprende el patrón: entre semana hay más, de madrugada menos, en festivos cambia…). La alarma no salta por haber muchos aviones, sino por haber muchos <em>más que el promedio regular</em>: eso es lo raro.</p>
           <p style="margin:0 0 10px"><strong>Verificación cruzada (el "detector de mentiras"):</strong> para no fiarnos de una sola voz, la app también pregunta a dos redes independientes de radioaficionados (<a href="https://www.adsb.lol" target="_blank" rel="noopener">adsb.lol</a> y <a href="https://airplanes.live" target="_blank" rel="noopener">airplanes.live</a>) cuántos jets privados de los modelos más comunes ven volando sobre EE.UU. Con los primeros chequeos aprende sola cuánto es "lo normal" en cada red. Si algún día EWS grita nivel 5, comprueba al instante si esas redes también ven el cielo lleno de jets: si lo confirman, la cosa va en serio; si ven un día normal, te avisa de que probablemente es un falso positivo.</p>
           <p style="margin:0 0 12px"><strong>Qué hace esta app:</strong> cada 30 minutos lee el canal público de alertas de ese sistema. Ese canal solo "grita" cuando se alcanza el nivel 5 (emergencia oficial). Si eso pasa, te avisa con sirena, notificación y pantalla de alarma. El resto del tiempo verás nivel 1: sin señales de emergencia.</p>
-          <p style="margin:0 0 12px"><strong>"Activar notificaciones" vs "Avisos con la app cerrada":</strong> el primer botón solo te avisa si tienes Ragnarok abierta en ese momento. El segundo activa avisos de verdad (como los de WhatsApp): un servidor propio, vigilado cada 5 minutos por un robot gratuito de GitHub, revisa el estado aunque no tengas nada abierto y le pide a tu celular que muestre la notificación igual. Actívalo una sola vez y queda funcionando solo.</p>
+          <p style="margin:0 0 12px"><strong>"Activar notificaciones":</strong> un solo botón, un solo toque. Te pide permiso una vez y activa avisos de verdad (como los de WhatsApp): un servidor propio, vigilado cada 5 minutos por un robot gratuito de GitHub, revisa el estado aunque no tengas nada abierto y le pide a tu celular que muestre la notificación igual, incluso con Ragnarok completamente cerrada. Actívalo una sola vez y queda funcionando solo.</p>
           <p style="margin:0;font-size:13px;color:var(--tinta-3)">
             Experimento curioso, no protección civil oficial. Para emergencias reales, haz caso a las autoridades.
             <a href="https://ews.kylemcdonald.net/" target="_blank" rel="noopener">ews.kylemcdonald.net</a> ·
@@ -803,30 +799,12 @@ $("btnAuto").addEventListener("click", ()=>{
   $("txtAuto").textContent = autoActivo ? "Próxima en 30:00" : "Auto en pausa · toca para reanudar";
   if(autoActivo) segRestantes = INTERVALO_SEG;
 });
-$("btnNotif").addEventListener("click", async ()=>{
-  try{
-    const p = await Notification.requestPermission();
-    if(p==="granted"){
-      $("txtNotif").textContent = "Notificaciones activas";
-      $("btnNotif").style.color = "#4ADBC0";
-      $("btnNotif").style.borderColor = "rgba(74,219,192,.35)";
-      $("btnNotif").disabled = true;
-    }
-  }catch(e){}
-});
-if(typeof Notification!=="undefined" && Notification.permission==="granted"){
-  $("txtNotif").textContent = "Notificaciones activas";
-  $("btnNotif").style.color = "#4ADBC0";
-  $("btnNotif").style.borderColor = "rgba(74,219,192,.35)";
-  $("btnNotif").disabled = true;
-}
-
-/* ---------- Avisos push reales (funcionan con la app cerrada) ----------
-   A diferencia del botón de arriba (que solo avisa si tienes la app
-   abierta), este activa avisos de verdad: un servidor propio vigila el
-   cielo cada 5 minutos (lo dispara un robot de GitHub Actions) y, si hay
-   alerta, le pide a tu navegador que te muestre la notificación aunque
-   Ragnarok esté completamente cerrado. */
+/* ---------- Notificaciones (todo en un solo botón) ----------
+   Un único botón hace dos cosas a la vez: pide el permiso normal del
+   navegador Y, si es compatible, crea además una suscripción push real
+   guardada en el servidor. Así, aunque cierres Ragnarok del todo, un
+   robot gratuito de GitHub Actions revisa el cielo cada 5 minutos y te
+   avisa igual, como una notificación normal de WhatsApp. */
 const VAPID_PUBLICA = "BJkohlkUBiG_16uK23BHw1alfyFMne6Wk5Km2Ue-5Y8PN1Hww2QyquXy4yxGUK8hvJ-yRLPi3ZApJHhDX3FJrjc";
 function base64UrlABytes(base64Url){
   const relleno = "=".repeat((4 - (base64Url.length % 4)) % 4);
@@ -836,29 +814,9 @@ function base64UrlABytes(base64Url){
   for(let i=0;i<cruda.length;i++) bytes[i] = cruda.charCodeAt(i);
   return bytes;
 }
-function marcarPushActivo(){
-  $("txtPush").textContent = "Avisos con app cerrada: ACTIVOS";
-  $("btnPush").style.color = "#4ADBC0";
-  $("btnPush").style.borderColor = "rgba(74,219,192,.35)";
-}
-async function activarPushCerrado(){
-  if(!("serviceWorker" in navigator) || !("PushManager" in window)){
-    alert("Tu navegador no soporta avisos push. Prueba con Chrome o Edge actualizados.");
-    return;
-  }
-  if(!location.protocol.startsWith("http")){
-    alert("Esto solo funciona en la app publicada (https), no abriendo el archivo suelto.");
-    return;
-  }
-  $("txtPush").textContent = "Activando…";
-  $("btnPush").disabled = true;
+async function intentarSuscribirPush(){
+  if(!("serviceWorker" in navigator) || !("PushManager" in window) || !location.protocol.startsWith("http")) return;
   try{
-    const permiso = await Notification.requestPermission();
-    if(permiso!=="granted"){
-      $("txtPush").textContent = "Avisos con la app cerrada";
-      $("btnPush").disabled = false;
-      return;
-    }
     const reg = await navigator.serviceWorker.ready;
     let sub = await reg.pushManager.getSubscription();
     if(!sub){
@@ -872,19 +830,29 @@ async function activarPushCerrado(){
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(sub)
     });
-    marcarPushActivo();
   }catch(err){
-    $("txtPush").textContent = "No se pudo activar (reintenta)";
-    $("btnPush").disabled = false;
+    /* Si el push falla (navegador raro, sin service worker, etc.) no pasa
+       nada: el usuario igual se queda con las notificaciones normales. */
   }
 }
-$("btnPush").addEventListener("click", activarPushCerrado);
-/* Si el navegador ya tenía una suscripción activa de una visita anterior,
-   lo reflejamos en el botón sin que el usuario tenga que volver a tocarlo. */
-if("serviceWorker" in navigator && "PushManager" in window && location.protocol.startsWith("http")){
-  navigator.serviceWorker.ready.then(reg=>reg.pushManager.getSubscription()).then(sub=>{
-    if(sub) marcarPushActivo();
-  }).catch(()=>{});
+function marcarNotifActivas(){
+  $("txtNotif").textContent = "Notificaciones activas";
+  $("btnNotif").style.color = "#4ADBC0";
+  $("btnNotif").style.borderColor = "rgba(74,219,192,.35)";
+  $("btnNotif").disabled = true;
+}
+$("btnNotif").addEventListener("click", async ()=>{
+  try{
+    const p = await Notification.requestPermission();
+    if(p==="granted"){
+      marcarNotifActivas();
+      await intentarSuscribirPush();
+    }
+  }catch(e){}
+});
+if(typeof Notification!=="undefined" && Notification.permission==="granted"){
+  marcarNotifActivas();
+  intentarSuscribirPush();
 }
 
 $("btnProbar").addEventListener("click", ()=>{

@@ -65,10 +65,9 @@ COMO SE USA
 -----------
 - Al abrirla, comprueba sola el estado de los jets.
 - Se re-comprueba cada 30 minutos automaticamente mientras esta abierta.
-- Pulsa "Activar notificaciones" para que te avise sin mirar la pantalla
-  (pero solo mientras tengas la app abierta).
-- Pulsa "Avisos con la app cerrada" para que te avise aunque la hayas
-  cerrado del todo (ver seccion siguiente).
+- Pulsa "Activar notificaciones" UNA sola vez: te pide permiso y deja
+  todo activado, incluyendo los avisos aunque cierres la app del todo
+  (ver seccion siguiente).
 - "Probar alarma" te deja escuchar la sirena de prueba.
 - Si el nivel llega a 4 o 5: sirena + pantalla roja + notificacion.
 
@@ -79,8 +78,8 @@ emergencias reales, haz caso siempre a las autoridades.
 NOVEDAD: AVISOS AUNQUE LA APP ESTE CERRADA
 -------------------------------------------
 Antes, la app solo podia avisarte si la tenias abierta (aunque fuera en
-segundo plano). Ahora hay un segundo boton, "Avisos con la app cerrada",
-que activa avisos de verdad, como los de WhatsApp:
+segundo plano). Ahora el mismo boton "Activar notificaciones" activa
+avisos de verdad, como los de WhatsApp:
 
 - Un servidor propio (parte de la misma app, viviendo en Vercel) vigila
   el cielo cada 5 minutos, sin importar si tu celular esta apagado o la
@@ -91,7 +90,7 @@ que activa avisos de verdad, como los de WhatsApp:
   cualquier notificacion normal del celular.
 
 Toca el boton una sola vez, dale permiso de notificaciones, y ya queda
-activo para siempre (hasta que tu quieras desactivarlo borrando los
+todo activo para siempre (hasta que tu quieras desactivarlo borrando los
 datos del navegador o desinstalando la app).
 
 NOVEDAD: VERIFICACION CRUZADA (3 FUENTES)
