@@ -121,17 +121,25 @@ Como funciona (para dummies):
 Nota: lo aprendido se guarda en tu propio dispositivo. Si borras
 los datos del navegador, la app simplemente vuelve a aprender.
 
-NOVEDAD: MAPA, MODELOS Y TENDENCIA
------------------------------------
+NOVEDAD: MAPA MUNDIAL, CATEGORIAS Y TENDENCIA
+-----------------------------------------------
 Usando esos mismos datos de adsb.lol y airplanes.live, la app ahora
 tambien te muestra:
 
-  1. Un mapa en tiempo real con la posicion de esos jets ahora mismo
-     (toca un punto para ver el vuelo, la matricula y la altitud).
-  2. Una lista de que modelos de avion son los mas comunes en el aire.
+  1. Un mapa MUNDIAL en tiempo real (no solo EE.UU.) con la posicion
+     real de jets privados (en ambar) y aviones militares (en azul),
+     cada uno con una flechita que apunta hacia su rumbo real. Toca
+     un avioncito para ver el vuelo, la matricula y la altitud.
+  2. Una lista de cuantos hay de cada categoria (jets privados vs.
+     militares) en el aire ahora mismo, en todo el mundo.
   3. Una mini-grafica de como ha ido cambiando esa cantidad en las
      ultimas horas (se necesitan un par de comprobaciones para que
      empiece a dibujarse).
+
+Ojo: esto es solo para curiosear el trafico aereo del momento. La
+alarma de emergencia (nivel 4-5) sigue basandose solo en los jets
+privados sobre EE.UU., como siempre - el mapa mundial no cambia esa
+logica, solo te deja ver mas.
 
 Todo esto vive dentro del panel "Fuentes de datos" y el nuevo panel
 del mapa, justo debajo. No hace falta activar nada, se actualiza solo

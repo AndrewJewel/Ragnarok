@@ -309,7 +309,7 @@ dialog li{margin-bottom:6px}
 
     <div class="titulo-seccion" style="margin-top:18px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
-      Modelos más comunes en el aire
+      Tipos de aeronave en el aire (mundial)
     </div>
     <div id="listaModelos" class="lista-modelos">
       <p class="dato-fuente" style="margin:0">Consultando…</p>
@@ -327,12 +327,16 @@ dialog li{margin-bottom:6px}
   <section class="panel entrada" id="panelMapa">
     <div class="titulo-seccion">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5 9 4l6 2.5 6-2.5v13L15 19.5 9 17l-6 2.5z"/><path d="M9 4v13"/><path d="M15 6.5v13"/></svg>
-      Mapa en tiempo real · jets detectados
+      Mapa mundial en tiempo real
     </div>
     <div class="mapa-contenedor">
       <div id="mapa"></div>
     </div>
-    <p style="margin:10px 0 0;font-size:12.5px;color:var(--tinta-3)">Solo se ven los jets que las redes independientes detectan ahora mismo (los mismos modelos de la verificación cruzada). Se actualiza junto con "Comprobar ahora".</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--tinta-2)">
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:#F2C14E;display:inline-block"></span>Jets privados</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:#5DA9E9;display:inline-block"></span>Aviones militares</span>
+    </div>
+    <p style="margin:8px 0 0;font-size:12.5px;color:var(--tinta-3)">Cada avioncito apunta hacia el rumbo real que lleva. Toca uno para ver el vuelo, la matrícula y la altitud. Se actualiza junto con "Comprobar ahora".</p>
   </section>
 
   <section class="panel controles entrada">
@@ -378,7 +382,7 @@ dialog li{margin-bottom:6px}
           <p style="margin:0 0 10px"><strong>Verificación cruzada (el "detector de mentiras"):</strong> para no fiarnos de una sola voz, la app también pregunta a dos redes independientes de radioaficionados (<a href="https://www.adsb.lol" target="_blank" rel="noopener">adsb.lol</a> y <a href="https://airplanes.live" target="_blank" rel="noopener">airplanes.live</a>) cuántos jets privados de los modelos más comunes ven volando sobre EE.UU. Con los primeros chequeos aprende sola cuánto es "lo normal" en cada red. Si algún día EWS grita nivel 5, comprueba al instante si esas redes también ven el cielo lleno de jets: si lo confirman, la cosa va en serio; si ven un día normal, te avisa de que probablemente es un falso positivo.</p>
           <p style="margin:0 0 12px"><strong>Qué hace esta app:</strong> cada 30 minutos lee el canal público de alertas de ese sistema. Ese canal solo "grita" cuando se alcanza el nivel 5 (emergencia oficial). Si eso pasa, te avisa con sirena, notificación y pantalla de alarma. El resto del tiempo verás nivel 1: sin señales de emergencia.</p>
           <p style="margin:0 0 12px"><strong>"Activar notificaciones":</strong> un solo botón, un solo toque. Te pide permiso una vez y activa avisos de verdad (como los de WhatsApp): un servidor propio, vigilado cada 5 minutos por un robot gratuito de GitHub, revisa el estado aunque no tengas nada abierto y le pide a tu celular que muestre la notificación igual, incluso con Ragnarok completamente cerrada. Actívalo una sola vez y queda funcionando solo.</p>
-          <p style="margin:0 0 12px"><strong>Mapa, modelos y tendencia:</strong> usando esos mismos datos de adsb.lol y airplanes.live, la app también dibuja un mapa con la posición real de esos jets ahora mismo, una lista de qué modelos son los más comunes en el aire, y una mini-gráfica de cómo ha ido cambiando esa cantidad en las últimas horas. Toca un punto del mapa para ver el vuelo, la matrícula y la altitud.</p>
+          <p style="margin:0 0 12px"><strong>Mapa mundial, categorías y tendencia:</strong> usando esos mismos datos de adsb.lol y airplanes.live, la app también dibuja un mapa mundial con la posición real de jets privados (en ámbar) y aviones militares (en azul), cada uno apuntando hacia su rumbo real; una lista de cuántos hay de cada categoría; y una mini-gráfica de cómo ha ido cambiando esa cantidad en las últimas horas. Toca un avioncito en el mapa para ver el vuelo, la matrícula y la altitud. Ojo: esto es solo para curiosear el tráfico aéreo del momento — la alarma de emergencia sigue basándose solo en los jets privados sobre EE.UU., como siempre.</p>
           <p style="margin:0;font-size:13px;color:var(--tinta-3)">
             Experimento curioso, no protección civil oficial. Para emergencias reales, haz caso a las autoridades.
             <a href="https://ews.kylemcdonald.net/" target="_blank" rel="noopener">ews.kylemcdonald.net</a> ·
@@ -529,11 +533,19 @@ async function intentarFetch(url){
    que ven los mismos aviones en crudo. Contamos cuántos jets privados
    de los modelos más comunes están volando sobre EE.UU. ahora mismo.
    La app aprende sola el promedio de cada fuente (localStorage) y lo
-   usa para confirmar o desmentir una alarma de nivel 4-5. */
+   usa para confirmar o desmentir una alarma de nivel 4-5. Esta parte
+   de la verificación se queda igual que siempre (solo EE.UU.): lo que
+   cambia es lo que se PINTA (mapa/lista), que ahora es mundial. */
 const TIPOS_JET = ["GLF5","GLF6","GLEX","CL30","CL35","CL60","C750","C56X","C68A","E55P","F2TH","PC24"];
 const FUENTES_IND = [
   {id:"adsblol",       nombre:"adsb.lol",       base:"https://api.adsb.lol/v2/type/"},
   {id:"airplaneslive", nombre:"airplanes.live", base:"https://api.airplanes.live/v2/type/"}
+];
+/* Endpoint dedicado de cada red: aviones MILITARES detectados en todo el
+   mundo ahora mismo (no hace falta filtrar por tipo, ya viene filtrado). */
+const FUENTES_MIL = [
+  {id:"adsblol_mil",       url:"https://api.adsb.lol/v2/mil"},
+  {id:"airplaneslive_mil", url:"https://api.airplanes.live/v2/mil"}
 ];
 const CLAVE_MEMORIA = "ragnarok_memoria_v1";
 const MUESTRAS_MINIMAS = 8;   // muestras necesarias antes de emitir veredicto
@@ -542,6 +554,22 @@ const UMBRAL_Z = 2.5;         // cuántas desviaciones por encima de lo normal =
 function esSobreEEUU(a){
   return typeof a.lat==="number" && typeof a.lon==="number" &&
          a.lat>=24 && a.lat<=50 && a.lon>=-125 && a.lon<=-66;
+}
+
+/* Convierte un registro crudo de la API en el formato que usan el mapa
+   y la lista de categorías. "categoria" es "privado" o "militar". */
+function registroDesdeAC(a, categoria){
+  return {
+    hex: a.hex,
+    categoria,
+    tipo: a.t || "?",
+    descripcion: a.desc || null,
+    lat: a.lat, lon: a.lon,
+    alt: typeof a.alt_baro==="number" ? a.alt_baro : null,
+    vuelo: (a.flight||"").trim() || null,
+    reg: a.r || null,
+    rumbo: typeof a.track==="number" ? a.track : (typeof a.true_heading==="number" ? a.true_heading : null)
+  };
 }
 
 async function contarFuente(f){
@@ -566,20 +594,30 @@ async function contarFuente(f){
     }
     if(!hubo) return null;
   }
+  /* "cantidad" (para el veredicto de alarma) sigue siendo SOLO EE.UU.,
+     igual que siempre. "aviones" (para pintar) es mundial: no filtramos
+     por país, solo descartamos los que están en tierra o sin coordenadas. */
+  const vistosEEUU=new Set(); const aviones=new Map();
+  for(const a of lista){
+    if(!a || !a.hex || a.alt_baro==="ground" || typeof a.lat!=="number" || typeof a.lon!=="number") continue;
+    aviones.set(a.hex, registroDesdeAC(a,"privado"));
+    if(esSobreEEUU(a)) vistosEEUU.add(a.hex);
+  }
+  return { cantidad: vistosEEUU.size, aviones: Array.from(aviones.values()) };
+}
+
+async function obtenerMilitares(f){
+  const texto = await intentarFetch(f.url);
+  if(texto===null) return [];
+  let lista=null;
+  try{ const d=JSON.parse(texto); if(Array.isArray(d.ac)) lista=d.ac; }catch(e){}
+  if(!lista) return [];
   const vistos=new Map();
   for(const a of lista){
-    if(a && a.hex && a.alt_baro!=="ground" && esSobreEEUU(a)){
-      vistos.set(a.hex, {
-        hex: a.hex,
-        tipo: a.t || "?",
-        lat: a.lat, lon: a.lon,
-        alt: typeof a.alt_baro==="number" ? a.alt_baro : null,
-        vuelo: (a.flight||"").trim() || null,
-        reg: a.r || null
-      });
-    }
+    if(!a || !a.hex || a.alt_baro==="ground" || typeof a.lat!=="number" || typeof a.lon!=="number") continue;
+    vistos.set(a.hex, registroDesdeAC(a,"militar"));
   }
-  return { cantidad: vistos.size, aviones: Array.from(vistos.values()) };
+  return Array.from(vistos.values());
 }
 
 function leerMemoria(){ try{ return JSON.parse(localStorage.getItem(CLAVE_MEMORIA)||"{}"); }catch(e){ return {}; } }
@@ -600,54 +638,53 @@ function estadisticaFuente(id){
 }
 
 async function consultarFuentesIndependientes(){
-  const conteos={}, aeronavesPorFuente={};
-  await Promise.all(FUENTES_IND.map(async f=>{
-    const r = await contarFuente(f);
-    conteos[f.id] = r ? r.cantidad : null;
-    aeronavesPorFuente[f.id] = r ? r.aviones : [];
-  }));
-  return { conteos, aeronavesPorFuente };
+  const conteos={};
+  const listas=[];
+  await Promise.all([
+    ...FUENTES_IND.map(async f=>{
+      const r = await contarFuente(f);
+      conteos[f.id] = r ? r.cantidad : null;
+      if(r) listas.push(r.aviones);
+    }),
+    ...FUENTES_MIL.map(async f=>{ listas.push(await obtenerMilitares(f)); })
+  ]);
+  // Las distintas fuentes a veces ven el mismo avión; lo unimos por su
+  // "hex" (identificador de radio único) para no contarlo dos veces.
+  const combinadas = new Map();
+  for(const lista of listas) for(const a of lista) if(!combinadas.has(a.hex)) combinadas.set(a.hex, a);
+  return { conteos, aeronaves: Array.from(combinadas.values()) };
 }
 
-/* ---------- Mapa, modelos y tendencia (a partir de las mismas fuentes
-   independientes de arriba) ----------
-   Las dos redes a veces ven el mismo avión; lo unimos por su "hex" (su
-   identificador de radio único) para no contarlo ni pintarlo dos veces. */
+/* ---------- Mapa y tendencia (a partir de las mismas fuentes de arriba,
+   ahora a nivel mundial y separadas en dos categorías: jets privados y
+   aviones militares). ---------- */
 const NOMBRES_MODELO = {
   GLF5:"Gulfstream V", GLF6:"Gulfstream G650", GLEX:"Bombardier Global Express",
   CL30:"Challenger 300", CL35:"Challenger 350", CL60:"Challenger 600",
   C750:"Citation X", C56X:"Citation Excel/XLS", C68A:"Citation Latitude",
   E55P:"Phenom 300", F2TH:"Falcon 2000", PC24:"Pilatus PC-24"
 };
+const NOMBRES_CATEGORIA = { privado:"Jets privados", militar:"Aviones militares" };
+const COLOR_CATEGORIA = { privado:"#F2C14E", militar:"#5DA9E9" };
 const CLAVE_TENDENCIA = "ragnarok_tendencia_v1";
 let ultimasAeronaves = [];
 let mapaLeaflet = null, capaMarcadores = null;
 
-function combinarAeronaves(porFuente){
-  const combinadas = new Map();
-  for(const id of Object.keys(porFuente)){
-    for(const a of porFuente[id]){
-      if(!combinadas.has(a.hex)) combinadas.set(a.hex, a);
-    }
-  }
-  return Array.from(combinadas.values());
-}
-
-function pintarModelos(aviones){
+function pintarCategorias(aviones){
   const zona = $("listaModelos");
   if(!zona) return;
-  if(!aviones.length){
+  const cuentas = { privado:0, militar:0 };
+  for(const a of aviones) cuentas[a.categoria] = (cuentas[a.categoria]||0)+1;
+  const filas = Object.entries(cuentas).filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]);
+  if(!filas.length){
     zona.innerHTML = `<p class="dato-fuente" style="margin:0">Sin datos de las fuentes independientes en este momento.</p>`;
     return;
   }
-  const cuentas = {};
-  for(const a of aviones) cuentas[a.tipo] = (cuentas[a.tipo]||0)+1;
-  const filas = Object.entries(cuentas).sort((a,b)=>b[1]-a[1]);
   const max = filas[0][1];
-  zona.innerHTML = filas.map(([tipo,n])=>`
+  zona.innerHTML = filas.map(([cat,n])=>`
     <div class="fila-modelo">
-      <span class="nombre-modelo">${NOMBRES_MODELO[tipo]||tipo} <span class="mono" style="color:var(--tinta-3);font-weight:400">(${tipo})</span></span>
-      <span class="barra-fondo"><span class="barra" style="width:${Math.max(6,Math.round(n/max*100))}%"></span></span>
+      <span class="nombre-modelo">${NOMBRES_CATEGORIA[cat]||cat}</span>
+      <span class="barra-fondo"><span class="barra" style="width:${Math.max(6,Math.round(n/max*100))}%;background:${COLOR_CATEGORIA[cat]||"var(--ambar)"}"></span></span>
       <span class="mono cuenta-modelo">${n}</span>
     </div>`).join("");
 }
@@ -682,7 +719,7 @@ function pintarTendencia(){
   const d = pts.map((p,i)=> (i===0?"M":"L")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
   const area = d + ` L ${pts[pts.length-1][0].toFixed(1)} ${h-pad} L ${pts[0][0].toFixed(1)} ${h-pad} Z`;
   zona.innerHTML = `
-    <svg class="mini-grafica" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Tendencia de jets detectados por las fuentes independientes">
+    <svg class="mini-grafica" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Tendencia de aeronaves detectadas por las fuentes independientes">
       <path d="${area}" fill="rgba(242,193,78,.15)" stroke="none"/>
       <path d="${d}" fill="none" stroke="#F2C14E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -691,10 +728,24 @@ function pintarTendencia(){
     </div>`;
 }
 
+/* Icono de avioncito que apunta hacia su rumbo real (0°=norte, como
+   una brújula), para que en el mapa se vea hacia dónde vuela cada uno. */
+function iconoAvion(categoria, rumbo){
+  const color = COLOR_CATEGORIA[categoria] || "#F2C14E";
+  const grados = typeof rumbo === "number" ? rumbo : 0;
+  return L.divIcon({
+    className: "",
+    html: `<svg width="16" height="16" viewBox="0 0 24 24" fill="${color}" style="display:block;transform:rotate(${grados}deg);filter:drop-shadow(0 0 2px rgba(0,0,0,.7))"><path d="M12 2c-.6 0-1 .4-1 1v6.4L3 13v2l8-2.4V19l-2.5 2v1.3L12 21l2.5 1.3V21L12 19v-6.4l8 2.4v-2l-8-3.6V3c0-.6-.4-1-1-1z"/></svg>`,
+    iconSize:[16,16], iconAnchor:[8,8]
+  });
+}
+
 function inicializarMapa(){
   if(mapaLeaflet || typeof L === "undefined") return;
   try{
-    mapaLeaflet = L.map("mapa", { zoomControl:true, attributionControl:true }).setView([39.5,-98.35], 4);
+    /* Vista mundial (no solo EE.UU.): empieza mostrando todo el planeta. */
+    mapaLeaflet = L.map("mapa", { zoomControl:true, attributionControl:true, worldCopyJump:true, minZoom:2 })
+      .setView([20, 10], 2);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
       maxZoom: 19, subdomains: "abcd"
@@ -715,12 +766,11 @@ function pintarMapa(aviones){
   capaMarcadores.clearLayers();
   for(const a of aviones){
     if(typeof a.lat!=="number" || typeof a.lon!=="number") continue;
-    const nombre = NOMBRES_MODELO[a.tipo] || a.tipo;
-    const marcador = L.circleMarker([a.lat, a.lon], {
-      radius:5, color:"#F2C14E", weight:1.5, fillColor:"#F2C14E", fillOpacity:.8
-    });
+    const marcador = L.marker([a.lat, a.lon], { icon: iconoAvion(a.categoria, a.rumbo) });
+    const etiqueta = a.categoria==="militar" ? "Avión militar" : "Jet privado";
+    const nombre = a.categoria==="militar" ? (a.descripcion || a.tipo) : (NOMBRES_MODELO[a.tipo] || a.tipo);
     marcador.bindPopup(
-      `<strong>${nombre}</strong> <span style="color:var(--tinta-3)">(${a.tipo})</span><br>` +
+      `<strong>${etiqueta}</strong><br>${nombre} <span style="color:var(--tinta-3)">(${a.tipo})</span><br>` +
       (a.vuelo ? `Vuelo ${a.vuelo}<br>` : "") +
       (a.reg ? `Matrícula ${a.reg}<br>` : "") +
       (a.alt!==null ? `Altitud ${a.alt.toLocaleString("es")} ft` : "")
@@ -730,9 +780,9 @@ function pintarMapa(aviones){
   setTimeout(()=>{ if(mapaLeaflet) mapaLeaflet.invalidateSize(); }, 200);
 }
 
-function actualizarAeronaves(porFuente){
-  ultimasAeronaves = combinarAeronaves(porFuente);
-  pintarModelos(ultimasAeronaves);
+function actualizarAeronaves(aeronaves){
+  ultimasAeronaves = aeronaves;
+  pintarCategorias(ultimasAeronaves);
   pintarMapa(ultimasAeronaves);
   guardarMuestraTendencia(ultimasAeronaves.length);
   pintarTendencia();
@@ -932,12 +982,12 @@ async function comprobar(){
   /* Las fuentes independientes arrancan en paralelo pero NO bloquean al
      dato oficial: el dial se pinta en cuanto responde el EWS, y el panel
      de fuentes se actualiza solo cuando ellas terminen. */
-  const promesaVer = consultarFuentesIndependientes().then(({conteos, aeronavesPorFuente})=>{
+  const promesaVer = consultarFuentesIndependientes().then(({conteos, aeronaves})=>{
     const ver = evaluarVerificacion(conteos);
     ultimaVer = ver;
     pintarFuentes(ultimoEstado, ver);
     pintarVeredicto(ultimoEstado ? ultimoEstado.nivel : null, ver);
-    actualizarAeronaves(aeronavesPorFuente);
+    actualizarAeronaves(aeronaves);
     return ver;
   });
   const e = await obtenerEstado();
