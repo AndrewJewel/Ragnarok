@@ -507,10 +507,12 @@ function pintarDial(nivel, cargando){
    current.emergencyLevel (nivel 1-5), current.asOf (fecha del dato). */
 const URL_DATOS = "https://pub-49bb6a6f314c47be9b481c25e5f6ca9e.r2.dev/dashboard.json";
 const URL_RSS = "https://ews.kylemcdonald.net/rss.xml";
+/* corsproxy.io ahora exige API key de pago y allorigins.win dejo de
+   responder: los dos proxies publicos gratuitos que usabamos murieron a
+   la vez. Se reemplazan por /api/proxy, un proxy propio en Vercel. */
 const PROXIES = [
   u => u,
-  u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
-  u => "https://corsproxy.io/?url=" + encodeURIComponent(u)
+  u => "/api/proxy?url=" + encodeURIComponent(u)
 ];
 
 async function intentarFetch(url){
