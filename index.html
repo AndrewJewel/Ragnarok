@@ -748,9 +748,13 @@ function inicializarMapa(){
     /* Vista mundial (no solo EE.UU.): empieza mostrando todo el planeta. */
     mapaLeaflet = L.map("mapa", { zoomControl:true, attributionControl:true, worldCopyJump:true, minZoom:2 })
       .setView([20, 10], 2);
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-      maxZoom: 19, subdomains: "abcd"
+    /* CARTO puso las tiles gratuitas de basemaps.cartocdn.com detras de
+       una API key (las imagenes ahora traen marcada la marca de agua
+       "API KEY REQUIRED"). Se cambia a las tiles oscuras gratuitas de
+       Esri, que no piden key. */
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+      attribution: '&copy; <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a>',
+      maxZoom: 16
     }).addTo(mapaLeaflet);
     capaMarcadores = L.layerGroup().addTo(mapaLeaflet);
   }catch(e){}
